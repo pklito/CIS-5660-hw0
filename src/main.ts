@@ -62,6 +62,11 @@ function main() {
   renderer.setClearColor(0.2, 0.2, 0.2, 1);
   gl.enable(gl.DEPTH_TEST);
 
+  //backface culling
+  gl.enable(gl.CULL_FACE);
+  gl.cullFace(gl.BACK);
+  gl.frontFace(gl.CCW);
+
   const lambert = new ShaderProgram([
     new Shader(gl.VERTEX_SHADER, lambertVertSource),
     new Shader(gl.FRAGMENT_SHADER, lambertFragSource),
