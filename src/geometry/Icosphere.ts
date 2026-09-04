@@ -71,26 +71,26 @@ class Icosphere extends Drawable {
     vertices[11].set([ -Z,-X,N,0 ]);
 
     // Initialize indices for a 20-sided icosahedron
-    triangles[0].set([ 0,4,1 ]);
-    triangles[1].set([ 0,9,4 ]);
-    triangles[2].set([ 9,5,4 ]);
-    triangles[3].set([ 4,5,8 ]);
-    triangles[4].set([ 4,8,1 ]);
-    triangles[5].set([ 8,10,1 ]);
-    triangles[6].set([ 8,3,10 ]);
-    triangles[7].set([ 5,3,8 ]);
-    triangles[8].set([ 5,2,3 ]);
-    triangles[9].set([ 2,7,3 ]);
-    triangles[10].set([ 7,10,3 ]);
-    triangles[11].set([ 7,6,10 ]);
-    triangles[12].set([ 7,11,6 ]);
-    triangles[13].set([ 11,0,6 ]);
-    triangles[14].set([ 0,1,6 ],);
-    triangles[15].set([ 6,1,10 ]);
-    triangles[16].set([ 9,0,11 ]);
-    triangles[17].set([ 9,11,2 ]);
-    triangles[18].set([ 9,2,5 ]);
-    triangles[19].set([ 7,2,11 ]);
+    triangles[0].set([ 0,1,4 ]);
+    triangles[1].set([ 0,4,9 ]);
+    triangles[2].set([ 9,4,5 ]);
+    triangles[3].set([ 4,8,5 ]);
+    triangles[4].set([ 4,1,8 ]);
+    triangles[5].set([ 8,1,10 ]);
+    triangles[6].set([ 8,10,3 ]);
+    triangles[7].set([ 5,8,3 ]);
+    triangles[8].set([ 5,3,2 ]);
+    triangles[9].set([ 2,3,7 ]);
+    triangles[10].set([ 7,3,10 ]);
+    triangles[11].set([ 7,10,6 ]);
+    triangles[12].set([ 7,6,11 ]);
+    triangles[13].set([ 11,6,0 ]);
+    triangles[14].set([ 0,6,1 ]);
+    triangles[15].set([ 6,10,1 ]);
+    triangles[16].set([ 9,11,0 ]);
+    triangles[17].set([ 9,2,11 ]);
+    triangles[18].set([ 9,5,2 ]);
+    triangles[19].set([ 7,11,2 ]);
 
     // This loop subdivides the icosahedron
     for (let s = 0; s < this.subdivisions; ++s) {
