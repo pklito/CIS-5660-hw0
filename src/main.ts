@@ -1,6 +1,6 @@
 import {vec3} from 'gl-matrix';
 import Stats from 'stats-js';
-import * as DAT from 'dat.gui';
+import GUI from 'lil-gui';
 import Icosphere from './geometry/Icosphere';
 import Square from './geometry/Square';
 import OpenGLRenderer from './rendering/gl/OpenGLRenderer';
@@ -39,7 +39,7 @@ function main() {
   document.body.appendChild(stats.domElement);
 
   // Add controls to the gui
-  const gui = new DAT.GUI();
+  const gui = new GUI();
   gui.add(controls, 'tesselations', 0, 8).step(1);
   gui.add(controls, 'Load Scene');
 
@@ -81,7 +81,7 @@ function main() {
     }
     renderer.render(camera, lambert, [
       icosphere,
-      // square,
+      square,
     ]);
     stats.end();
 
