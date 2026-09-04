@@ -3,6 +3,8 @@ import Stats from 'stats-js';
 import GUI from 'lil-gui';
 import Icosphere from './geometry/Icosphere';
 import Cube from './geometry/Cube';
+import Square from './geometry/Square';
+
 import OpenGLRenderer from './rendering/gl/OpenGLRenderer';
 import Camera from './Camera';
 import {setGL} from './globals';
@@ -10,22 +12,45 @@ import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
 
 import lambertVertSource from './shaders/lambert-vert.glsl?raw';
 import lambertFragSource from './shaders/lambert-frag.glsl?raw';
+import Drawable from './rendering/gl/Drawable';
 
 // Define an object with application parameters and button callbacks
 // This will be referred to by dat.GUI's functions that add GUI elements.
+enum Objects{
+  SQUARE,
+  CUBE,
+  SPHERE
+}
+
 const controls = {
   tesselations: 5,
+  object : Objects.CUBE,
   'Load Scene': loadScene, // A function pointer, essentially
 };
 
 let icosphere: Icosphere;
-let square: Cube;
+let cube: Cube;
+let square : Square;
 let prevTesselations: number = 5;
+let prevObject : Objects = Objects.CUBE;
+
+function enumToObject(e : Objects){
+  switch(e){
+    case Objects.CUBE:
+      return cube;
+    case Objects.SQUARE:
+      return square;
+    case Objects.SPHERE:
+      return icosphere;
+  }
+}
 
 function loadScene() {
   icosphere = new Icosphere(vec3.fromValues(0, 0, 0), 1, controls.tesselations);
   icosphere.create();
-  square = new Cube(vec3.fromValues(0, 0, 0));
+  cube = new Cube(vec3.fromValues(0, 0, 0));
+  cube.create();
+  square = new Square(vec3.fromValues(0, 0, 0));
   square.create();
 }
 
@@ -41,6 +66,7 @@ function main() {
   // Add controls to the gui
   const gui = new GUI();
   gui.add(controls, 'tesselations', 0, 8).step(1);
+  gui.add(controls, 'object', {Square : Objects.SQUARE, Cube : Objects.CUBE, Sphere: Objects.SPHERE});
   gui.add(controls, 'Load Scene');
 
   // get canvas and webgl context
@@ -84,10 +110,7 @@ function main() {
       icosphere = new Icosphere(vec3.fromValues(0, 0, 0), 1, prevTesselations);
       icosphere.create();
     }
-    renderer.render(camera, lambert, [
-      // icosphere,
-      square,
-    ]);
+    renderer.render(camera, lambert, [enumToObject(controls.object)]);
     stats.end();
 
     // Tell the browser to call `tick` again whenever it renders a new frame
