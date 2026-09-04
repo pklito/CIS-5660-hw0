@@ -15,14 +15,13 @@ class Cube extends Drawable {
 
   create() {
 
-  this.indices = new Uint32Array([0, 1, 2,
-                                  0, 2, 3,
-                                  4, 5, 6,
-                                  4, 6, 7,
-                                  0, 1, 4,
-                                  4, 5, 0,
-                                  6, 7, 2,
-                                  6, 1, 2]);
+  this.indices = new Uint32Array([0, 1, 2,  0, 2, 3, // front
+                                  6, 5, 4,  7, 6, 4, // back
+                                  0, 4, 1,  4, 5, 1, // up?
+                                  2, 1, 6,  6, 1, 5, // right?
+                                  3, 2, 6,  3, 6, 7, // six seeeven
+                                  0, 3, 7,  0, 7, 4 // somne
+                                ]);
   this.normals = new Float32Array([0, 0, 1, 1,
                                    0, 0, 1, 1,
                                    0, 0, 1, 1,
