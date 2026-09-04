@@ -1,7 +1,8 @@
 import {gl} from '../../globals';
-
+import {vec4} from 'gl-matrix';
 abstract class Drawable {
   count: number = 0;
+  color: vec4;
 
   bufIdx: WebGLBuffer;
   bufPos: WebGLBuffer;
