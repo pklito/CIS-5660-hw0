@@ -2,7 +2,7 @@ import {vec3} from 'gl-matrix';
 import Stats from 'stats-js';
 import GUI from 'lil-gui';
 import Icosphere from './geometry/Icosphere';
-import Square from './geometry/Square';
+import Cube from './geometry/Cube';
 import OpenGLRenderer from './rendering/gl/OpenGLRenderer';
 import Camera from './Camera';
 import {setGL} from './globals';
@@ -19,13 +19,13 @@ const controls = {
 };
 
 let icosphere: Icosphere;
-let square: Square;
+let square: Cube;
 let prevTesselations: number = 5;
 
 function loadScene() {
   icosphere = new Icosphere(vec3.fromValues(0, 0, 0), 1, controls.tesselations);
   icosphere.create();
-  square = new Square(vec3.fromValues(0, 0, 0));
+  square = new Cube(vec3.fromValues(0, 0, 0));
   square.create();
 }
 
@@ -80,7 +80,7 @@ function main() {
       icosphere.create();
     }
     renderer.render(camera, lambert, [
-      icosphere,
+      // icosphere,
       square,
     ]);
     stats.end();
