@@ -28,14 +28,18 @@ float noise_gen3(vec3 point){
 }
 
 
+float white_noise_frag(vec3 point){
+    float x = floor(point.x * 4.0f);
+    float y = floor(point.y * 4.0f);
+    float z = floor(point.z * 4.0f);
+    return noise_gen3(vec3(x,y,z));
+}
+
 void main()
 {
-    // Material base color (before shading)
-        float x = floor(fs_Pos.x * 4.0f);
-        float y = floor(fs_Pos.y * 4.0f);
-        float z = floor(fs_Pos.z * 4.0f);
-        float noise = noise_gen3(vec3(x,y,z));
-        vec4 diffuseColor = vec4(vec3(noise), 1.0);
+        float noise = white_noise_frag(fs_Pos.xyz);
+        noise = max(noise, 0.f);
+        vec4 diffuseColor = vec4(noise * u_Color.rgb, u_Color.a);
 
         // Calculate the diffuse term for Lambert shading
         float diffuseTerm = dot(normalize(fs_Nor), normalize(fs_LightVec));
