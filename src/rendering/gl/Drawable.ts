@@ -2,7 +2,7 @@ import {gl} from '../../globals';
 import {vec4} from 'gl-matrix';
 abstract class Drawable {
   count: number = 0;
-  color: vec4;
+  color: vec4 = vec4.fromValues(1.0,0.0,0.0,1.0);
 
   bufIdx: WebGLBuffer;
   bufPos: WebGLBuffer;
