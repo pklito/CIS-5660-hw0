@@ -35,6 +35,8 @@ float noise_gen2(float x, float y){
     return noise_gen2(vec2(x,y));
 }
 vec3 nearest_rng_point(vec3 point){
+    //Random grid originating point, used for voronoi and worley shaders.
+    //For every integer vec3, hashes an offset from 0-1 in all 3 axes.
     float min_dist = 10.0;
     vec3 min_point = vec3(0,0,0);
     for(int i = -1; i <= 1; i++){
@@ -60,10 +62,14 @@ vec3 nearest_rng_point(vec3 point){
 }
 
 float worley_noise_frag(vec3 point){
-        return distance(nearest_rng_point(point), point);
+    //the distance to the point is worley noise.
+    return distance(nearest_rng_point(point), point);
 }
 
 float voronoi_noise_frag(vec3 point){
+    //A hash of the point creates a voronoi pattern.
+    //TODO: floating point errors should affect this hash.
+    //Not sure why they dont.
     vec3 rng_point = nearest_rng_point(point);
     return noise_gen3(rng_point);
 }
