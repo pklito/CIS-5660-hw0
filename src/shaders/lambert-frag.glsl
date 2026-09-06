@@ -74,7 +74,7 @@ float voronoi_noise_frag(vec3 point){
     //TODO: floating point errors should affect this hash.
     //Not sure why they dont.
     vec3 rng_point = 1.*nearest_rng_point(point);
-    return noise_gen3(rng_point);
+    return 0.8 * noise_gen3(rng_point) + 0.2; //Ranged 0.2-1.0 because it looks better
 }
 
 float white_noise_frag(vec3 point){
