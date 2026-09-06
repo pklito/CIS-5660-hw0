@@ -6,6 +6,7 @@
 //If it were run on your CPU, each vertex would have to be processed in a FOR loop, one at a time.
 //This simultaneous transformation allows your program to run much faster, especially when rendering
 //geometry with millions of vertices.
+uniform float u_Time;
 
 uniform mat4 u_Model;       // The matrix that defines the transformation of the
                             // object we're rendering. In this assignment,

@@ -23,6 +23,8 @@ class OpenGLRenderer {
   }
 
   render(camera: Camera, prog: ShaderProgram, drawables: Array<Drawable>) {
+    prog.setTime(0.001 * performance.now());
+
     let model = mat4.create();
     let viewProj = mat4.create();
 
