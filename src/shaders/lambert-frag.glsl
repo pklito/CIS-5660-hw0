@@ -27,17 +27,39 @@ float noise_gen3(vec3 point){
     return fract(sin(dot(point, vec3(12.9898, 78.233, 193.31419))) * 43758.5453);
 }
 
+float noise_gen2(vec2 point){
+    return fract(sin(dot(point, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+float noise_gen2(float x, float y){
+    return noise_gen2(vec2(x,y));
+}
+
+float worley_noise_frag(vec3 point){
+    float min_dist = 10.0;
+    for(int i = -1; i <= 1; i++){
+        for(int j = -1; j <= 1; j++){
+            for(int k = -1; k <= 1; k++){
+                vec3 ivec = floor(point + vec3(i,j,k));
+                float pz = noise_gen2(ivec.x,ivec.y);
+                float py = noise_gen2(ivec.z,ivec.x);
+                float px = noise_gen2(ivec.y,ivec.z);
+                min_dist = min(min_dist, distance(point, ivec + vec3(px,py,pz)));
+            }
+        }   
+    }
+    return min_dist;
+}
 
 float white_noise_frag(vec3 point){
-    float x = floor(point.x * 4.0f);
-    float y = floor(point.y * 4.0f);
-    float z = floor(point.z * 4.0f);
-    return noise_gen3(vec3(x,y,z));
+    float scale = 4.0f;
+    vec3 ivec = floor(point * scale);
+    return noise_gen3(ivec);
 }
 
 void main()
 {
-        float noise = white_noise_frag(fs_Pos.xyz);
+        float noise = worley_noise_frag(   10.*fs_Pos.xyz);
         noise = max(noise, 0.f);
         vec4 diffuseColor = vec4(noise * u_Color.rgb, u_Color.a);
 
