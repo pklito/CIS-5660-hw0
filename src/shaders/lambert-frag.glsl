@@ -36,15 +36,19 @@ float noise_gen2(float x, float y){
 }
 
 float worley_noise_frag(vec3 point){
+    //Sample every neighbor in 3 dimensions.
     float min_dist = 10.0;
     for(int i = -1; i <= 1; i++){
         for(int j = -1; j <= 1; j++){
             for(int k = -1; k <= 1; k++){
+                //Sample an offset consistent to all frag neighbors ( because of floor(`) )
                 vec3 ivec = floor(point + vec3(i,j,k));
                 float pz = noise_gen2(ivec.x,ivec.y);
                 float py = noise_gen2(ivec.z,ivec.x);
                 float px = noise_gen2(ivec.y,ivec.z);
-                min_dist = min(min_dist, distance(point, ivec + vec3(px,py,pz)));
+                vec3 worley_point = ivec + vec3(px,py,pz);
+                //The min dist for worley noise
+                min_dist = min(min_dist, distance(point, worley_point));
             }
         }   
     }
