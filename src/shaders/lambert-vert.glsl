@@ -7,6 +7,7 @@
 //This simultaneous transformation allows your program to run much faster, especially when rendering
 //geometry with millions of vertices.
 uniform float u_Time;
+uniform float u_Wobble;
 
 uniform mat4 u_Model;       // The matrix that defines the transformation of the
                             // object we're rendering. In this assignment,
@@ -34,6 +35,12 @@ out vec4 fs_Pos;
 const vec4 lightPos = vec4(5, 5, 3, 1); //The position of our virtual light, which is used to compute the shading of
                                         //the geometry in the fragment shader.
 
+vec4 wobblePosition(vec4 pos){
+    float amount = sin(3.*u_Time + 10.*(pos.x - pos.y + pos.z));
+    pos += vec4(u_Wobble * normalize(pos.xyz)*amount, 1.0);
+    return pos;
+}
+
 void main()
 {
     fs_Col = vs_Col;                         // Pass the vertex colors to the fragment shader for interpolation
@@ -45,8 +52,8 @@ void main()
                                                             // perpendicular to the surface after the surface is transformed by
                                                             // the model matrix.
 
-
-    vec4 modelposition = u_Model * vs_Pos;   // Temporarily store the transformed vertex positions for use below
+    vec4 modifiedposition = wobblePosition(vs_Pos);
+    vec4 modelposition = u_Model * modifiedposition;   // Temporarily store the transformed vertex positions for use below
 
     fs_LightVec = lightPos - modelposition;  // Compute the direction in which the light source lies
 

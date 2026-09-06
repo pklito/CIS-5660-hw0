@@ -26,7 +26,8 @@ const controls = {
   tesselations: 5,
   object : Objects.CUBE,
   'Load Scene': loadScene, // A function pointer, essentially
-  color : vec4.fromValues(1.0, 0, 0, 1.0)
+  color : vec4.fromValues(1.0, 0, 0, 1.0),
+  wobble : 0.045
 };
 
 let icosphere: Icosphere;
@@ -73,6 +74,7 @@ function main() {
   gui.add(controls, 'object', {Square : Objects.SQUARE, Cube : Objects.CUBE, Sphere: Objects.SPHERE});
   gui.add(controls, 'Load Scene');
   gui.addColor(controls, 'color').listen();
+  gui.add(controls, 'wobble', 0, 0.5);
 
   // get canvas and webgl context
   const canvas = <HTMLCanvasElement> document.getElementById('canvas');
@@ -129,7 +131,7 @@ function main() {
       enumToObject(controls.object).color = controls.color;
       prevColor = controls.color;
     }
-
+    lambert.setWobble(controls.wobble);
     renderer.render(camera, lambert, [enumToObject(controls.object)]);
     stats.end();
 
@@ -143,6 +145,7 @@ function main() {
     camera.updateProjectionMatrix();
   }, false);
 
+  
   renderer.setSize(window.innerWidth, window.innerHeight);
   camera.setAspectRatio(window.innerWidth / window.innerHeight);
   camera.updateProjectionMatrix();
