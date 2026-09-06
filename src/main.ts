@@ -27,7 +27,8 @@ const controls = {
   object : Objects.CUBE,
   'Load Scene': loadScene, // A function pointer, essentially
   color : vec4.fromValues(1.0, 0, 0, 1.0),
-  wobble : 0.045
+  wobble : 0.045,
+  noise : 1
 };
 
 let icosphere: Icosphere;
@@ -75,6 +76,7 @@ function main() {
   gui.add(controls, 'Load Scene');
   gui.addColor(controls, 'color').listen();
   gui.add(controls, 'wobble', 0, 0.5);
+  gui.add(controls, 'noise', {Voronoi : 1, Worley : 2, Misc : 3});
 
   // get canvas and webgl context
   const canvas = <HTMLCanvasElement> document.getElementById('canvas');
@@ -132,6 +134,7 @@ function main() {
       prevColor = controls.color;
     }
     lambert.setWobble(controls.wobble);
+    lambert.setNoise(controls.noise);
     renderer.render(camera, lambert, [enumToObject(controls.object)]);
     stats.end();
 

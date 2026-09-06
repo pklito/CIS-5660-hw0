@@ -31,6 +31,7 @@ class ShaderProgram {
   unifColor: WebGLUniformLocation;
   unifTime: WebGLUniformLocation;
   unifWobble: WebGLUniformLocation;
+  unifNoise: WebGLUniformLocation;
 
   constructor(shaders: Array<Shader>) {
     this.prog = gl.createProgram();
@@ -52,6 +53,7 @@ class ShaderProgram {
     this.unifColor      = gl.getUniformLocation(this.prog, "u_Color");
     this.unifTime      = gl.getUniformLocation(this.prog, "u_Time");
     this.unifWobble     = gl.getUniformLocation(this.prog, "u_Wobble");
+    this.unifNoise      = gl.getUniformLocation(this.prog, "u_Noise");
 
 
   }
@@ -103,6 +105,13 @@ class ShaderProgram {
     if(this.unifTime !== -1){
       gl.uniform1f(this.unifWobble, wobble);
     }
+  }
+
+  setNoise(type : GLint){
+    this.use();
+    if(this.unifNoise !== -1){
+      gl.uniform1i(this.unifNoise, type);
+    } 
   }
 
   draw(d: Drawable) {

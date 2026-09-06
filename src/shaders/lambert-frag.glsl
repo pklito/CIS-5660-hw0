@@ -12,6 +12,7 @@
 precision highp float;
 
 uniform vec4 u_Color; // The color with which to render this instance of geometry.
+uniform int u_Noise;
 
 // These are the interpolated values out of the rasterizer, so you can't know
 // their specific values without knowing the vertices that contributed to them
@@ -82,7 +83,13 @@ float white_noise_frag(vec3 point){
 
 void main()
 {
-        float noise = voronoi_noise_frag(   10.*fs_Pos.xyz);
+        float noise = 0.5;
+        if(u_Noise == 1){
+            noise = voronoi_noise_frag(   10.*fs_Pos.xyz);
+        }
+        else if (u_Noise == 2){
+            noise = worley_noise_frag(10.*fs_Pos.xyz);
+        }
         noise = max(noise, 0.f);
         vec4 diffuseColor = vec4(noise * u_Color.rgb, u_Color.a);
 
