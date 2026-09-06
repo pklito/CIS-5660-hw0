@@ -34,10 +34,9 @@ float noise_gen2(vec2 point){
 float noise_gen2(float x, float y){
     return noise_gen2(vec2(x,y));
 }
-
-float worley_noise_frag(vec3 point){
-    //Sample every neighbor in 3 dimensions.
+vec3 nearest_rng_point(vec3 point){
     float min_dist = 10.0;
+    vec3 min_point = vec3(0,0,0);
     for(int i = -1; i <= 1; i++){
         for(int j = -1; j <= 1; j++){
             for(int k = -1; k <= 1; k++){
@@ -48,11 +47,25 @@ float worley_noise_frag(vec3 point){
                 float px = noise_gen2(ivec.y,ivec.z);
                 vec3 worley_point = ivec + vec3(px,py,pz);
                 //The min dist for worley noise
-                min_dist = min(min_dist, distance(point, worley_point));
+                float worley_dist = distance(point, worley_point);
+                if(worley_dist < min_dist){
+                    min_dist = worley_dist;
+                    min_point = worley_point;
+                }
+
             }
         }   
     }
-    return min_dist;
+    return min_point;
+}
+
+float worley_noise_frag(vec3 point){
+        return distance(nearest_rng_point(point), point);
+}
+
+float voronoi_noise_frag(vec3 point){
+    vec3 rng_point = nearest_rng_point(point);
+    return noise_gen3(rng_point);
 }
 
 float white_noise_frag(vec3 point){
@@ -63,7 +76,7 @@ float white_noise_frag(vec3 point){
 
 void main()
 {
-        float noise = worley_noise_frag(   10.*fs_Pos.xyz);
+        float noise = voronoi_noise_frag(   10.*fs_Pos.xyz);
         noise = max(noise, 0.f);
         vec4 diffuseColor = vec4(noise * u_Color.rgb, u_Color.a);
 
