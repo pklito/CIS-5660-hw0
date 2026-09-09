@@ -8,6 +8,7 @@
 ## Submission
 Live demo: https://pklito.github.io/CIS-5660-hw0/
 <img width="1906" height="896" alt="image" src="https://github.com/user-attachments/assets/9215bbc9-4da5-4fc1-9fb9-59af8d8b5da4" />
+<img width="1592" height="825" alt="image" src="https://github.com/user-attachments/assets/deddc6b6-bd1f-4fd6-b750-6de4deaff1dc" />
 
 In this submission I chose to implement worley and voronoi noise functions in my code.   
 I also added the option to choose which primitive to render, between the quad, cube, and isosphere.   
